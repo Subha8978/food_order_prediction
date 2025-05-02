@@ -17,3 +17,18 @@ try:
     print("✅ Prediction successful:", prediction)
 except Exception as e:
     print("❌ Failed to predict:", e)
+
+import pickle
+
+# Load the model
+with open('model.pkl', 'rb') as file:
+    model = pickle.load(file)
+
+# View model type
+print("Model type:", type(model))
+
+# View model structure (example: if it's a DecisionTreeClassifier)
+print(model)
+
+# View model parameters
+print("Parameters:", model.get_params())

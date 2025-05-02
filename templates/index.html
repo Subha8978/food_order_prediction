@@ -5,73 +5,137 @@
     <title>Online Food Order Prediction</title>
     <style>
         body {
-            font-family: Arial;
-            background-color: #f9f9f9;
-            padding: 40px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #f0f2f5, #e0e7ff);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px 20px;
         }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
         form {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            max-width: 500px;
-            margin: auto;
-            box-shadow: 0px 0px 10px #ccc;
-        }
-        input, select {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
+            max-width: 500px;
         }
+
+        label {
+            font-weight: 600;
+            margin-top: 12px;
+            display: block;
+            color: #333;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
         input[type="submit"] {
             background-color: #4CAF50;
             color: white;
+            font-size: 16px;
+            padding: 12px;
             border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
-        h2, h3 {
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        h3 {
+            margin-top: 30px;
+            color: #444;
             text-align: center;
         }
     </style>
 </head>
 <body>
-    <h2>Will You Order Food Online?</h2>
+    <h2>Online Food Order Prediction</h2>
     <form action="/predict" method="POST">
-        Age: <input type="number" name="age" required>
-        
-        Gender:
-        <select name="gender" required>
+        <label for="age">Age:</label>
+        <input type="number" name="age" id="age" required>
+
+        <label for="gender">Gender:</label>
+        <select name="gender" id="gender" required>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
         </select>
 
-        Marital Status:
-        <select name="marital_status" required>
+        <label for="marital_status">Marital Status:</label>
+        <select name="marital_status" id="marital_status" required>
             <option value="Single">Single</option>
             <option value="Married">Married</option>
+            <option value="Prefer Not to say">Prefer Not to say</option>
         </select>
 
-        Income: <input type="number" name="income" required>
+        <label for="monthly_income">Monthly Income (₹):</label>
+        <input type="number" name="monthly_income" id="monthly_income" required>
 
-        Occupation:
-        <select name="occupation" required>
+        <label for="occupation">Occupation:</label>
+        <select name="occupation" id="occupation" required>
             <option value="Student">Student</option>
-            <option value="Professional">Professional</option>
-            <option value="Other">Other</option>
+            <option value="Employee">Employee</option>
+            <option value="Self Employeed">Self Employeed</option>
+            <option value="House wife">House wife</option>
         </select>
 
-        Educational Qualification:
-        <select name="education" required>
-            <option value="Undergraduate">Undergraduate</option>
+        <label for="education">Educational Qualification:</label>
+        <select name="education" id="education" required>
             <option value="Graduate">Graduate</option>
-            <option value="Postgraduate">Postgraduate</option>
+            <option value="Post Graduate">Post Graduate</option>
+            <option value="Ph.D">Ph.D</option>
+            <option value="School">School</option>
+            <option value="Uneducated">Uneducated</option>
         </select>
 
-        Family Size: <input type="number" name="family_size" required>
-        Review of previous order: <input type="number" name="review" required>
-        Pincode: <input type="number" name="pincode" required>
+
+        <label for="family_size">Family Size:</label>
+        <input type="number" name="family_size" id="family_size" required>
+
+        
+
+        <label for="pincode">Pincode:</label>
+        <input type="number" name="pincode" id="pincode" required>
+
+        <label for=""review">Review:</label>
+        <select name="review" id="review" required>
+            <option value="1">Positive</option>
+            <option value="0">Negative</option>
 
         <input type="submit" value="Predict">
     </form>
 
     <h3>{{ prediction_text }}</h3>
+
+    {% if prediction_type == 'positive' %}
+        <div style="text-align:center; margin-top: 20px;">
+            <img src="{{ url_for('static', filename='order_positive.gif') }}" alt="Ordering Animation" width="300">
+        </div>
+    {% elif prediction_type == 'negative' %}
+        <div style="text-align:center; margin-top: 20px;">
+            <img src="{{ url_for('static', filename='order_negative.gif') }}" alt="Sad Animation" width="300">
+        </div>
+        {% else %}
+        <p style="text-align:center; color: grey;">No prediction available.</p>
+    {% endif %}
+    
 </body>
 </html>
